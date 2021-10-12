@@ -1,0 +1,52 @@
+﻿<Window x:Class="WpfAreaPacking.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfAreaPacking"
+        mc:Ignorable="d"
+        Title="Симулятор размещения в зоне" Height="650" Width="900">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="500"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Vertical " Grid.Row="0">
+            <StackPanel  Orientation="Horizontal" Margin="20 0">
+                <TextBlock Height="20"  Margin="5 0">Зона=>  длина: </TextBlock>
+                <TextBox x:Name="AreaLength" Width="100" Height="20" Text="36000"/>
+                
+                <TextBlock Height="20" Margin="5 0">ширина: </TextBlock>
+                <TextBox x:Name="AreaHeight" Width="100" Height="20" Text="20000"/>
+                
+                <Button Click="PackingClick" Height="20" Width="100">Обновить</Button>
+                
+                <TextBlock Text="Оптимально:" Margin="5 0" Height="20"/>
+                <CheckBox x:Name="CheckBoxSort" Height="20" />
+                
+                <TextBlock Text="Инвертировать_X:" Margin="5 0" Height="20"/>
+                <CheckBox x:Name="CheckBoxInvertX" Height="20" />
+                
+                <TextBlock Text="Инвертировать_Y:" Margin="5 0" Height="20"/>
+                <CheckBox x:Name="CheckBoxInvertY" Height="20" IsChecked="True"/>
+            </StackPanel>
+            <!-- <StackPanel Orientation="Horizontal"> -->
+            <!--     <TextBlock Height="20"  Margin="5 0">Между слябами</TextBlock> -->
+            <!--     <TextBox x:Name="tbBoxMargin" Width="100" Height="20"/> -->
+            <!--      -->
+            <!--     <TextBlock Height="20"  Margin="5 0">Отступ от зоны</TextBlock> -->
+            <!--     <TextBox x:Name="tbAeaMargin" Width="100" Height="20"/> -->
+            <!-- </StackPanel> -->
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Height="20"  Margin="5 0">Сдвиг</TextBlock>
+                <CheckBox x:Name="CheckBoxShift" IsChecked="True"></CheckBox>
+            </StackPanel>
+        </StackPanel>
+        <Border Grid.Row="1" x:Name="CanvasBorder" BorderBrush="Black" BorderThickness="0">
+            <Canvas  Name="MyCanvas"/>
+        </Border>
+        <TextBlock Grid.Row="2" x:Name="tbInfo" Text="Не вместились: "/>
+    </Grid>
+</Window>
