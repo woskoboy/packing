@@ -17,6 +17,9 @@ namespace WpfAreaPacking
         private readonly MainWindow _mainWindow;
         private readonly Canvas _canvas;
         private List<List<Box>> _allColumns  = new List<List<Box>>();
+
+        private float _areaLength; 
+        private float _areaHeight; 
         
         #region const
         
@@ -26,21 +29,33 @@ namespace WpfAreaPacking
         const float AREA_MARGIN = 500/SCALE;
         private bool isInvertX; 
         private bool isInvertY;
+        
 
         #endregion
 
         public AreaPackerNew(Canvas canvas, MainWindow mainWindow)
         {
+            #region Controls
+
             _mainWindow = mainWindow;
             _canvas = canvas;
+
+            _areaLength = int.TryParse(_mainWindow.AreaLength.Text, out int valLen) ? valLen : 0;
+            _areaHeight = int.TryParse(_mainWindow.AreaHeight.Text, out int valHeight) ? valHeight : 0;
             
+            // directions
+            isInvertX = _mainWindow.CheckBoxInvertX.IsChecked ?? false;
+            isInvertY = _mainWindow.CheckBoxInvertY.IsChecked ?? false;
+
+            #endregion
+            
+            // Prepare Slabs
+            int pp = 0;
             var slabs = JsonConvert.DeserializeObject<IEnumerable<Slab>>(JsonData.Json).ToList();
-            //slabs.ForEach(s=> s.WIDTH = s.WIDTH/SCALE);
-            //slabs.ForEach(s=> s.LENGTH = s.LENGTH/SCALE);
-            int _pp = 0;
-            var slabBoxes = slabs.Select(s=> new Box{ pp = ++_pp, Id = s.WRHS_OBJ_ID, height = s.WIDTH, length = s.LENGTH, Slab = s}).ToList();
+            _boxes = slabs.Select(s=> new Box { pp = ++pp, Id = s.WRHS_OBJ_ID, height = s.WIDTH, length = s.LENGTH, Slab = s}).ToList();
+            SortAndScaleBoxes();
             
-            _boxes = new List<Box>
+            /*_boxes = new List<Box>
             {
                 new () {pp = 1, length = 150, height = 50},
                 new () {pp = 2, length = 200, height = 50},
@@ -50,15 +65,9 @@ namespace WpfAreaPacking
                 new () {pp = 6, length = 130, height = 50},
                 new () {pp = 7, length = 100, height = 50},
                 new () {pp = 8, length = 100, height = 50},
-            };
-            _boxes = slabBoxes;
-            
-            // directions
-            isInvertX = _mainWindow.CheckBoxInvertX.IsChecked ?? false;
-            isInvertY = _mainWindow.CheckBoxInvertY.IsChecked ?? false;
-            
-            PrepareArea();
-            PrepareBoxes();
+            };*/
+
+            InitArea();
             
             Pack();
             Display();
@@ -77,29 +86,28 @@ namespace WpfAreaPacking
 
         #region init
 
-        private void PrepareBoxes()
+        private void SortAndScaleBoxes()
         {
-            _boxes.ForEach(b=> b.height = b.height/SCALE + BOX_MARGIN);
-            _boxes.ForEach(b=> b.length = b.length/SCALE + BOX_MARGIN);
+            foreach (var b in _boxes)
+            {
+                b.height = b.height / SCALE + BOX_MARGIN;
+                b.length = b.length / SCALE + BOX_MARGIN;
+                b.volume = b.length * b.height;
+            }
             // Sort 
-            _boxes.ForEach(x => x.volume = (x.length * x.height));
             _boxes = (_mainWindow.CheckBoxSort.IsChecked ?? false) 
                 ? _boxes.OrderByDescending(x => x.volume).ThenBy(x=> x.pp).ToList() 
                 : _boxes.ToList();
         }
 
-        private void PrepareArea()
+        private void InitArea()
         {
-            // root node
-            rootNode = new Node
-            {
-                length = int.TryParse(_mainWindow.AreaLength.Text, out int valLen) ? valLen : 0, 
-                height = int.TryParse(_mainWindow.AreaHeight.Text, out int valHeight) ? valHeight : 0, 
-                pos_x = 0, pos_y = 0
+            // area root node container, margins and scale
+            rootNode = new Node {
+                pos_x = 0, pos_y = 0,
+                length = _areaLength / SCALE - AREA_MARGIN,
+                height = _areaHeight / SCALE - AREA_MARGIN
             };
-            // margins
-            rootNode.height = rootNode.height / SCALE - AREA_MARGIN;
-            rootNode.length = rootNode.length / SCALE - AREA_MARGIN;
         }
 
         #endregion
