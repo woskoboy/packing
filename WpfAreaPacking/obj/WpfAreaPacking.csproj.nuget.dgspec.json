@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\va.voskoboinik\\Desktop\\WpfAreaPacking\\WpfAreaPacking\\WpfAreaPacking.csproj": {}
+    "C:\\Users\\xcore\\Desktop\\WpfAreaPacking\\WpfAreaPacking\\WpfAreaPacking\\WpfAreaPacking.csproj": {}
   },
   "projects": {
-    "C:\\Users\\va.voskoboinik\\Desktop\\WpfAreaPacking\\WpfAreaPacking\\WpfAreaPacking.csproj": {
+    "C:\\Users\\xcore\\Desktop\\WpfAreaPacking\\WpfAreaPacking\\WpfAreaPacking\\WpfAreaPacking.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\va.voskoboinik\\Desktop\\WpfAreaPacking\\WpfAreaPacking\\WpfAreaPacking.csproj",
+        "projectUniqueName": "C:\\Users\\xcore\\Desktop\\WpfAreaPacking\\WpfAreaPacking\\WpfAreaPacking\\WpfAreaPacking.csproj",
         "projectName": "WpfAreaPacking",
-        "projectPath": "C:\\Users\\va.voskoboinik\\Desktop\\WpfAreaPacking\\WpfAreaPacking\\WpfAreaPacking.csproj",
-        "packagesPath": "C:\\Users\\va.voskoboinik\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\va.voskoboinik\\Desktop\\WpfAreaPacking\\WpfAreaPacking\\obj\\",
+        "projectPath": "C:\\Users\\xcore\\Desktop\\WpfAreaPacking\\WpfAreaPacking\\WpfAreaPacking\\WpfAreaPacking.csproj",
+        "packagesPath": "C:\\Users\\xcore\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\xcore\\Desktop\\WpfAreaPacking\\WpfAreaPacking\\WpfAreaPacking\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\va.voskoboinik\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\xcore\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -67,7 +63,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.300\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -70,10 +70,11 @@ namespace WpfAreaPacking
             InitArea();
             
             Pack();
+            CenteringColumns();
             Display();
         }
 
-        #region  privates
+        #region  methods
         
         private void Pack()
         {
@@ -148,6 +149,7 @@ namespace WpfAreaPacking
                     }
                 }
             }
+            
             _allColumns.Add(column);
             if (nextColumn.Count > 0)
             {
@@ -251,6 +253,32 @@ namespace WpfAreaPacking
         }*/
 
         #endregion
+
+        #region centered
+
+        private void CentringColumn(List<Box> column)
+        {
+            var maxLength = column.Max(b => b.length);
+            var halfMaxLength = maxLength / 2;
+            foreach (var box in column)
+            {
+                if (box.length < maxLength)
+                {
+                    box.position.pos_x  += halfMaxLength - (box.length / 2);
+                }
+            }
+        }
+
+        private void CenteringColumns()
+        {
+            foreach (var column in _allColumns)
+            {
+                CentringColumn(column);
+            }
+        }
+
+        #endregion
+
         
         #endregion
 
@@ -258,16 +286,17 @@ namespace WpfAreaPacking
         
         private void Display()
         {
+            float K = 2;
             _canvas.Children.Clear();
             _mainWindow.tbInfo.Text = "";
 
             _canvas.Width = rootNode.length + AREA_MARGIN;
-            _canvas.Height = rootNode.height  + AREA_MARGIN; 
-            
+            _canvas.Height = rootNode.height  + AREA_MARGIN;
+
             var areaRectangle = new Rectangle 
             {
-                Height =  _canvas.Height, 
-                Width =  _canvas.Width,
+                Height =  _canvas.Height * K, 
+                Width =  _canvas.Width * K,
                 Stroke = new SolidColorBrush(Colors.Black),
                 Fill = new SolidColorBrush(Colors.Aquamarine)
             };
@@ -287,14 +316,14 @@ namespace WpfAreaPacking
                 //var boxLength = box.length - BOX_MARGIN; //var boxHeight = box.height - BOX_MARGIN;
                 
                 var slab = box.Slab;
-                slab.X_COORD = (int)boxPosX;
-                slab.Y_COORD = (int)boxPosY;
+                slab.X_COORD = (int)(boxPosX * K);
+                slab.Y_COORD = (int)(boxPosY * K);
 
                 // rect
                 var rectangle = new Rectangle 
                 {
                     //Height = (int)boxHeight, Width = (int)boxLength,
-                    Height = slab.WIDTH/SCALE, Width = slab.LENGTH/SCALE,
+                    Height = slab.WIDTH/SCALE* K, Width = slab.LENGTH/SCALE * K,
                     Fill = new SolidColorBrush(Colors.LightSlateGray), 
                     Stroke = new SolidColorBrush(Colors.Black)
                 };
@@ -305,7 +334,7 @@ namespace WpfAreaPacking
                 var textBlock = new TextBlock
                 {
                     //Text = $"{box.pp} - {box.Id} {boxHeight/10}", // {box.length}x{box.height}  ({boxPosX},{boxPosY})
-                    Text = $"{box.pp} - {box.Id} { slab.WIDTH/SCALE}",
+                    Text = $"{box.pp} - {slab.DISPLAY_NAME} {slab.WIDTH/1000}x{slab.LENGTH/1000}",
                     Foreground = new SolidColorBrush(Colors.Black)
                 };
                 CheckDirectionAndSetPosition(textBlock, slab.X_COORD, slab.Y_COORD, 0, 0);

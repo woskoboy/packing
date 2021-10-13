@@ -45,7 +45,7 @@
             </StackPanel>
         </StackPanel>
         <Border Grid.Row="1" x:Name="CanvasBorder" BorderBrush="Black" BorderThickness="0">
-            <Canvas  Name="MyCanvas"/>
+            <Canvas  Name="MyCanvas" />
         </Border>
         <TextBlock Grid.Row="2" x:Name="tbInfo" Text="Не вместились: "/>
     </Grid>
